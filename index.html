@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View File</title>
+    <style>/* Reset default margin and padding */
+      
+      
+      body {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#loadFileButton {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#results {
+    margin-top: 20px;
+}
+
+.data-section {
+    border: 1px solid #333;
+    background-color: #333;
+    padding: 10px;
+    margin: 20px 0;
+}
+
+.ip, .username {
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+.show-all-logs {
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 16px;
+    color: #007bff;
+}
+
+.search-container {
+    margin-top: 20px;
+}
+
+.search-input {
+    padding: 5px;
+    font-size: 16px;
+}
+
+.filter-button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.filter-results {
+    margin-top: 20px;
+    font-size: 16px;
+    text-align: left;
+    color: #ffffff;
+}
+
+        /* Add your CSS styles here for formatting */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        #loadFileButton {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        #results {
+            margin-top: 20px;
+        }
+
+        .data-section {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .ip {
+            color: #e74c3c;
+            cursor: pointer;
+        }
+
+        .username {
+            color: #3498db;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .show-all-logs {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Use a more elegant font */
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Style the heading */
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px; /* Increased spacing for elegance */
+    text-align: center;
+}
+
+/* Style the primary button */
+#loadFileButton, #showAllLogsButton {
+    display: inline-block; /* Buttons now side by side */
+    margin: 10px; /* Added spacing for elegance */
+    padding: 12px 24px; /* Increased padding for elegance */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px; /* Rounded corners for elegance */
+    transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+#loadFileButton:hover, #showAllLogsButton:hover {
+    background-color: #0056b3; /* Darker color on hover */
+}
+
+/* Style the results container */
+#results {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Style the search input and category select */
+.log-search, .log-category {
+    flex: 1; /* Equal width for search and select */
+    margin: 10px;
+}
+
+.log-search input[type="text"], .log-category select {
+    width: 100%; /* Use full width of the container */
+    padding: 10px; /* Increased padding for elegance */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Style the log segments */
+.log-segment {
+    border: 1px solid #ccc;
+    padding: 20px; /* Increased padding for elegance */
+    margin: 10px 0;
+    white-space: pre-wrap; /* Preserve line breaks */
+}
+
+/* Hide elements gracefully */
+.hidden {
+    display: none;
+}
+</style>
+</head>
+<body>
+    <h1>File Viewer</h1>
+
+    <div class="log-search">
+        <input type="text" id="logSearchInput" placeholder="Search Categories">
+    </div>
+
+    <div id="results">
+        <div class="log-category" id="category1">
+            <select id="categorySelect1">
+                <option value="All">All Categories</option>
+            </select>
+            <div id="logSegmentsContainer1" class="hidden">
+                <!-- Log segments for category 1 will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <button id="loadFileButton">Load File</button>
+    <button id="showAllLogsButton">Show All Logs</button>
+
+ <script>
+    const loadFileButton = document.getElementById("loadFileButton");
+    const showAllLogsButton = document.getElementById("showAllLogsButton");
+    const logSearchInput = document.getElementById("logSearchInput");
+
+    loadFileButton.addEventListener("click", () => {
+        const password = prompt("Enter the password:"); // Prompt the user for the password
+
+        // If the user cancels the prompt or enters an empty password, do nothing
+        if (password === null || password.trim() === "") {
+            return;
+        }
+
+        const url = `https://hello2022isthe3nd.000webhostapp.com/view.php?password=${encodeURIComponent(password)}`;
+
+        fetch(url)
+            .then(response => {
+                if (response.ok) {
+                    return response.text(); // If the response is successful, read the content
+                } else {
+                    throw new Error("Access Denied"); // If the response is not successful, throw an error
+                }
+            })
+            .then(data => {
+                const segments = data.split("Data5");
+                const logSegmentsContainer1 = document.getElementById("logSegmentsContainer1");
+
+                segments.forEach((segment, index) => {
+                    const option1 = document.createElement("option");
+                    option1.value = "Category " + (index + 1);
+                    option1.textContent = "Category " + (index + 1);
+                    document.getElementById("categorySelect1").appendChild(option1);
+
+                    const category1 = document.getElementById("category1");
+
+                    if (index === 0) {
+                        logSegmentsContainer1.innerHTML = "";
+                        logSegmentsContainer1.classList.remove("hidden");
+                        category1.style.display = "block";
+                    }
+
+                    const categorySelect1 = document.getElementById("categorySelect1");
+                    categorySelect1.addEventListener("change", () => {
+                        const selectedCategory = categorySelect1.value;
+                        if (selectedCategory === "All" || selectedCategory === "Category " + (index + 1)) {
+                            logSegmentsContainer1.innerHTML += `<div class="log-segment">Segment ${index + 1}:\n${segment}</div>`;
+                        }
+                    });
+                });
+
+                showAllLogsButton.addEventListener("click", () => {
+                    logSegmentsContainer1.innerHTML = segments.map((segment, index) => {
+                        return `<div class="log-segment">Segment ${index + 1}:\n${segment}</div>`;
+                    }).join("");
+                });
+
+                loadFileButton.style.display = "none";
+                showAllLogsButton.style.display = "block";
+            })
+            .catch(error => {
+                console.error("Error: " + error);
+            });
+    });
+
+    logSearchInput.addEventListener("input", () => {
+        const searchValue = logSearchInput.value.toLowerCase();
+        const categories = document.querySelectorAll(".log-category");
+
+        categories.forEach(category => {
+            const categorySelect = category.querySelector("select");
+            const categoryName = categorySelect.options[categorySelect.selectedIndex].textContent.toLowerCase();
+
+            if (categoryName.includes(searchValue)) {
+                category.style.display = "block";
+            } else {
+                category.style.display = "none";
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>
