@@ -2,78 +2,159 @@
 <html>
 <head>
     <title>View File</title>
-    <style>
-        /* Add your CSS styles here for formatting */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+   <style>
+     
+     .log-segment {
+    padding: 20px;
+    margin: 20px auto; /* Center align horizontally and apply vertical margin */
+    white-space: pre-line;
+    background-color: #2e2619; /* Dark wood finish for segments */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff; /* Text color for logs */
+    border: 2px solid #362b1b; /* Border color matching background */
+    width: calc(100% - 1050px); /* Subtract 40px (20px on each side) from the width */
+}
 
-        h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-            text-align: center;
-        }
+    /* Add your CSS styles here for formatting */
+    body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #362b1b; /* Dark wood background color */
+        color: #fff; /* Text color */
+    }
 
-        #loadFileButton {
-            display: block;
-            margin: 0 auto;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
+    h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #00b8ff; /* Accent color for headings */
+    }
 
-        #showAllLogsButton {
-            margin: 10px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            display: none; /* Initially hide the button */
-        }
+    #loadFileButton {
+        display: block;
+        margin: 0 auto;
+        padding: 12px 24px;
+        background-color: #00b8ff; /* Accent color for buttons */
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 18px;
+    }
 
-        #results {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
+    #showAllLogsButton {
+        margin: 20px 0;
+        padding: 12px 24px;
+        background-color: #00b8ff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        display: none; /* Initially hide the button */
+        border-radius: 5px;
+        font-size: 18px;
+    }
 
-        .log-search {
-            width: 100%;
-            text-align: center;
-            padding: 10px;
-        }
+    #results {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 20px;
+    }
 
-        .log-search input[type="text"] {
-            width: 50%;
-            padding: 5px;
-        }
+    .log-search {
+        width: 100%;
+        text-align: center;
+        padding: 20px;
+    }
 
-        .log-category {
-            flex: 1;
-            margin: 10px;
-        }
+    .log-search input[type="text"] {
+        width: 60%;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #2e2619; /* Dark wood finish for input */
+        color: #fff;
+    }
 
-        .log-category select {
-            width: 0%;
-            padding: 5px;
-        }
+    .log-category {
+        flex: 1;
+        margin: 20px;
+    }
 
-        .log-segment {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin: 10px 0;
-            white-space: pre-line;
-        }
+    .log-category select {
+        width: 70%;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #2e2619; /* Dark wood finish for select */
+        color: #fff;
+    }
 
-        .hidden {
-            display: none;
+    
+
+    }
+
+    /* JavaScript assigns border colors based on the sum of character placements */
+
+
+.log-category {
+    flex: 1;
+    margin: 20px auto; /* Center align and add vertical margin */
+    padding: 0 10px; /* Add horizontal margin */
+}
+
+
+  .log-category select {
+    width: 70%;
+    padding: 16px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #2e2619; /* Dark wood finish for select */
+    color: #fff;
+    display: block; /* Ensure it takes the full width */
+    margin: 0 auto; /* Center align the select element */
+}
+
+</style>
+
+<script>
+    const logSegments = document.querySelectorAll('.log-segment');
+
+    // Function to calculate the sum of character placements in a string
+    function calculateSum(username) {
+        let sum = 0;
+        for (let i = 0; i < username.length; i++) {
+            sum += username.charCodeAt(i) - 96;
         }
-    </style>
+        return sum;
+    }
+
+    // Function to convert a number to a color code
+    function numberToColor(number) {
+        const color = "#" + number.toString(16).padStart(6, "0");
+        return color;
+    }
+
+    // Assign border colors to log segments based on the sum of character placements
+    logSegments.forEach(segment => {
+        const username = segment.getAttribute('Data4');
+        if (username === 'none') {
+            segment.style.border = '2px solid grey';
+        } else {
+            const sum = calculateSum(username);
+            const color = numberToColor(sum);
+            segment.style.border = `2px solid ${color}`;
+        }
+    });
+</script>
+
+
 </head>
 <body>
     <h1>File Viewer</h1>
@@ -89,12 +170,53 @@
             </select>
             <div id="logSegmentsContainer1" class="hidden">
                 <!-- Log segments for category 1 will be displayed here -->
+                <!-- Assign unique Data4 values or 'none' to each log segment -->
+                <div class="log-segment" Data4="user1" Data1="Value1">Segment 1: This is a log entry for user1.</div>
+                <div class="log-segment" Data4="user2" Data1="Value2">Segment 2: This is a log entry for user2.</div>
+                <div class="log-segment" Data4="none" Data1="Value3">Segment 3: This is a log entry with no username.</div>
             </div>
         </div>
     </div>
 
     <button id="loadFileButton">Load File</button>
     <button id="showAllLogsButton">Show All Logs</button>
+
+    <script>
+        const logSegments = document.querySelectorAll('.log-segment');
+
+        // Function to calculate the sum of character placements in a string
+        function calculateSum(username) {
+            let sum = 0;
+            for (let i = 0; i < username.length; i++) {
+                sum += username.charCodeAt(i) - 96;
+            }
+            return sum;
+        }
+
+        // Function to convert a number to a color code
+        function numberToColor(number) {
+            const color = "#" + number.toString(16).padStart(6, "0");
+            return color;
+        }
+
+        // Assign border colors to log segments based on the sum of character placements
+        logSegments.forEach(segment => {
+            const username = segment.getAttribute('Data4');
+            if (username === 'none') {
+                segment.style.borderColor = 'grey';
+            } else {
+                const sum = calculateSum(username);
+                const color = numberToColor(sum);
+                segment.style.borderColor = color;
+            }
+
+            // Underline the Data1 value
+            const data1Value = segment.getAttribute('Data1');
+            if (data1Value) {
+                segment.innerHTML = segment.innerHTML.replace(`Data1={${data1Value}}`, `<u>Data1={${data1Value}}</u>`);
+            }
+        });
+    </script>
 
     <script>
     const loadFileButton = document.getElementById("loadFileButton");
@@ -124,12 +246,11 @@
                     segments.reverse(); // Reverse the order of segments
 
                     logSegmentsContainer1.innerHTML = ""; // Clear the container
-                    var arrayLength = myArray.length;
+
                     segments.forEach((segment, index) => {
                         const option1 = document.createElement("option");
-                      
-                        option1.value = "Category " + (arrayLength -1);
-                        option1.textContent = "Category " + (arrayLength -1);
+                        option1.value = "Category " + (index + 1);
+                        option1.textContent = "Category " + (index + 1);
                         document.getElementById("categorySelect1").appendChild(option1);
 
                         const category1 = document.getElementById("category1");
