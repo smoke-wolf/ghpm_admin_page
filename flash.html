@@ -1,0 +1,130 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Flashcard Quiz</title>
+    <style>
+    
+    #quiz {
+        display: flex;
+        flex-wrap: wrap;
+      background-color: #0d063d;
+        justify-content: space-between;
+    }
+    .flashcard {
+        width: 300px;
+        height: 200px;
+        margin: 10px;
+        padding: 10px;
+        background-color: #322659;
+        border: 1px solid #333;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+    }
+    .flashcard:hover {
+        background-color: #e0e0e0;
+    }
+    .question {
+        margin: 10px;
+        padding: 10px;
+      
+    }
+      
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+      background-color: #0d063d;
+      
+    }
+      
+    .answer {
+        display: none;
+    }
+    .flashcard.active .answer {
+        display: block;
+    }
+</style>
+
+</head>
+<body>
+    <div id="quiz">
+        <div class="flashcard" id="question1">
+            <div class="question">OSI Model Question 1: What conceptual framework is used to understand and describe how different networking protocols and technologies interact within a network?</div>
+            <div class="answer hidden">Answer: OSI (Open Systems Interconnection) model.</div>
+        </div>
+        <div class="flashcard" id="question2">
+            <div class="question">OSI Model Question 2: How many layers are there in the OSI model, each responsible for specific tasks?</div>
+            <div class="answer hidden">Answer: Seven layers.</div>
+        </div>
+        <div class="flashcard" id="question3">
+            <div class="question">OSI Model Question 3: What does the Physical Layer of the OSI model deal with?</div>
+            <div class "answer hidden">Answer: Physical connections, cables, and hardware.</div>
+        </div>
+        <div class="flashcard" id="question4">
+            <div class="question">OSI Model Question 4: Which layer of the OSI model manages data frames, error detection, and access control, dealing with Ethernet and MAC addresses?</div>
+            <div class="answer hidden">Answer: Data Link Layer.</div>
+        </div>
+        <div class="flashcard" id="question5">
+            <div class="question">OSI Model Question 5: What does the Network Layer handle in the OSI model?</div>
+            <div class="answer hidden">Answer: Routing, addressing, and logical addressing (IP).</div>
+        </div>
+        <div class="flashcard" id="question6">
+            <div class="question">OSI Model Question 6: Which OSI layer ensures end-to-end communication, error checking, and flow control, using protocols like TCP and UDP?</div>
+            <div class="answer hidden">Answer: Transport Layer.</div>
+        </div>
+        <div class="flashcard" id="question7">
+            <div class="question">OSI Model Question 7: What is the main responsibility of the Presentation Layer in the OSI model?</div>
+            <div class="answer hidden">Answer: Translates data into a common format, which includes encryption and compression.</div>
+        </div>
+        <div class="flashcard" id="question8">
+            <div class="question">OSI Model Question 8: In the OSI model, which layer supports user applications like HTTP and FTP?</div>
+            <div class="answer hidden">Answer: Application Layer.</div>
+        </div>
+        <div class="flashcard" id="question9">
+            <div class="question">DHCP/TCP-IP Question 1: What does DHCP stand for, and what is its primary function in a network?</div>
+            <div class="answer hidden">Answer: DHCP stands for Dynamic Host Configuration Protocol, and it's used to automatically assign IP addresses and network configuration settings to devices.</div>
+        </div>
+        <div class="flashcard" id="question10">
+            <div class="question">DHCP/TCP-IP Question 2: What does TCP/IP stand for, and what are the two main protocols in this suite?</div>
+            <div class="answer hidden">Answer: TCP/IP stands for Transmission Control Protocol/Internet Protocol. The two main protocols are TCP (Transmission Control Protocol) and IP (Internet Protocol).</div>
+        </div>
+        <div class="flashcard" id="question11">
+            <div class="question">DHCP/TCP-IP Question 3: How does DHCP enhance network configuration within the TCP/IP suite?</div>
+            <div class="answer hidden">Answer: DHCP assigns IP addresses, subnet masks, default gateways, and DNS server addresses to devices, making network configuration easier and more efficient.</div>
+        </div>
+        <div class="flashcard" id="question12">
+            <div class="question">Switches, Bridges, and Nodes Question 1: What is the primary difference between switches and bridges in networking, and which OSI layer do they operate at?</div>
+            <div class="answer hidden">Answer: Switches are more advanced and efficient than bridges and operate at the data link layer (Layer 2) of the OSI model.</div>
+        </div>
+        <div class="flashcard" id="question13">
+            <div class="question">Switches, Bridges, and Nodes Question 2: How do switches and bridges determine where to forward Ethernet frames in a network?</div>
+            <div class="answer hidden">Answer: They examine MAC addresses in Ethernet frames and forward frames only to the appropriate port where the destination device is located.</div>
+        </div>
+        <div class="flashcard" id="question14">
+            <div class="question">Switches, Bridges, and Nodes Question 3: What is the primary advantage of switches over bridges in reducing network congestion?</div>
+            <div class="answer hidden">Answer: Switches can make forwarding decisions more intelligently based on MAC address tables.</div>
+        </div>
+        <div class="flashcard" id="question15">
+            <div class="question">Switches, Bridges, and Nodes Question 4: What does the term "node" refer to in networking, and how are nodes assigned MAC addresses?</div>
+            <div class="answer hidden">Answer: A "node" refers to any device connected to a network, and they are assigned MAC addresses to communicate within a LAN.</div>
+        </div>
+    </div>
+    <button onclick="showAnswer()">Show Answer</button>
+</body>
+<script>
+    const flashcards = document.querySelectorAll('.flashcard');
+
+    flashcards.forEach(flashcard => {
+        flashcard.addEventListener('click', () => {
+            const question = flashcard.querySelector('.question');
+            const answer = flashcard.querySelector('.answer');
+            question.style.display = 'none';
+            answer.style.display = 'block';
+        });
+    });
+</script>
+</html>
